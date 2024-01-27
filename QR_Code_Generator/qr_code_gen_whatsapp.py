@@ -1,3 +1,8 @@
+# Python Project
+# Author: Mohammad Uzair
+# Contact: mduzairan@gmail.com 
+
+
 import os
 import random
 import string
