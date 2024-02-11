@@ -1,0 +1,135 @@
+Code Explanation: Sentiment Analysis Bot
+
+-------------------------------------
+Library used: TextBlob and dataclass
+-------------------------------------
+TextBlob: A library for processing textual data, providing a simple API for common natural language processing (NLP) tasks such as part-of-speech tagging, noun phrase extraction, sentiment analysis, classification, translation, and more.
+dataclass: A decorator that automatically generates special methods such as __init__() and __repr__() for a class. It simplifies the creation of classes that primarily store data.
+Defining a Data Class for Mood
+
+@dataclass
+class Mood:
+    emoji: str
+    sentiment: float
+@dataclass: A decorator that automatically adds special methods to the class based on its annotated attributes. Here, it creates a Mood class with two attributes: emoji and sentiment.
+Defining the get_mood Function
+
+def get_mood(input_text: str, *, sensitivity: float) -> Mood:
+    """
+    Analyze the mood of a given text and return a Mood object containing the emoji and sentiment polarity.
+
+    :param input_text: The input text to be analyzed
+    :param sensitivity: 0.0 (super sensitive) - 1.0 (ultra nonsensitive)
+    :return: A Mood object containing the emoji representing the mood and the sentiment polarity value
+    """
+get_mood is a function that takes a text (input_text) and a sensitivity parameter. It returns a Mood object containing an emoji and a sentiment polarity value.
+The sensitivity parameter controls the threshold for categorizing the sentiment.
+Analyzing Sentiment Using TextBlob
+
+    polarity: float = TextBlob(input_text).sentiment.polarity
+
+TextBlob(input_text): Creates a TextBlob object for the given input text.
+.sentiment.polarity: Calculates the sentiment polarity of the text using TextBlob.
+Determining Mood
+
+    # Define mood thresholds
+    friendly_threshold: float = sensitivity
+  hostile_threshold: float = -sensitivity
+
+Sets threshold values for categorizing sentiments.
+
+    # Determine the mood and return the corresponding emoji
+    if polarity >= friendly_threshold:
+        return Mood('😊', polarity)
+    elif polarity <= hostile_threshold:
+        return Mood('😠', polarity)
+    else:
+        return Mood('😐', polarity)
+
+
+Uses the sentiment polarity to determine the mood.
+If the polarity is greater than or equal to the friendly threshold, it returns a happy emoji ('😊').
+If the polarity is less than or equal to the hostile threshold, it returns an angry emoji ('😠').
+Otherwise, it returns a neutral emoji ('😐').
+run_bot Function
+
+def run_bot():
+    print('Bot: Enter some text and I will perform a sentiment analysis on it.')
+    while True:
+        user_input: str = input('You: ')  # Try it with emojis as well! :) :O :D :( :I
+        mood: Mood = get_mood(user_input, sensitivity=0.3)
+        print(f'Bot: {mood.emoji} ({mood.sentiment})')
+run_bot is a function that continuously takes user input, performs sentiment analysis, and outputs the result.
+
+if __name__ == '__main__':
+    run_bot()
+
+The script runs the run_bot function when executed directly.
+
+This script creates a simple sentiment analysis bot using TextBlob. The bot analyzes user input and categorizes it as happy, angry, or neutral, displaying an emoji and sentiment polarity. The sensitivity parameter controls the threshold for sentiment categorization. The script runs indefinitely, allowing users to interact with the sentiment analysis bot.
+
+
+
+
+Other Doubts:
+
+Polarity:
+
+Definition: Polarity refers to the sentiment or emotional tone expressed in a piece of text. It indicates whether the text conveys a positive, negative, or neutral sentiment.
+Scale: Polarity values are often represented on a numerical scale, commonly ranging from -1 to 1. Negative Polarity: Values closer to -1 indicate a more negative sentiment.
+2. Positive Polarity: Values closer to 1 indicate a more positive sentiment.
+3. Neutral Polarity: A polarity value around 0 indicates a neutral sentiment.
+Example:
+"I love this product!" → Positive Polarity
+"I hate waiting in long lines." → Negative Polarity
+"The weather is okay." → Neutral Polarity
+
+
+Subjectivity:
+
+Definition: Subjectivity measures the degree to which a piece of text expresses opinions, feelings, or personal perspectives rather than presenting factual information.
+Scale: Subjectivity is often represented on a numerical scale, commonly ranging from 0 to 1.
+1. High Subjectivity: Values closer to 1 indicate that the text is subjective, expressing opinions or emotions.
+2. Low Subjectivity: Values closer to 0 indicate that the text is objective, presenting factual information without personal bias.
+Example:
+"I think the movie was amazing!" → High Subjectivity
+"Water boils at 100 degrees Celsius." → Low Subjectivity
+
+TextBlob Python Library:TextBlob is a Python library built on top of NLTK (Natural Language Toolkit) and Pattern libraries for processing textual data. It provides a simple API for common natural language processing (NLP) tasks such as part-of-speech tagging, noun phrase extraction, sentiment analysis, classification, translation, and more.
+
+
+Asterisk in get_mood function: In the get_mood function, the asterisk * is used in the parameter list to indicate that all the parameters following it must be specified as keyword arguments. [[The * indicates the end of positional parameters and the beginning of keyword-only parameters.]]
+
+Some practical use cases where sentiment analysis and NLP projects, similar to the provided mood analysis bot, can be applied:
+
+Customer Feedback Analysis:
+Analyzing customer reviews and feedback to understand customer sentiments about products or services.
+
+Social Media Monitoring:
+Monitoring social media platforms to analyze public opinion about a brand, product, or event.
+
+Chatbot Emotion Recognition:
+Enhancing chatbots with emotion recognition to provide more personalized and empathetic responses.
+
+Employee Feedback and Engagement:
+Analyzing employee feedback and survey responses to gauge overall employee sentiment.
+
+Brand Reputation Management:
+Monitoring news articles, blogs, and online forums to manage and maintain a positive brand reputation.
+
+Market Research:
+Analyzing market research surveys and focus group responses to understand consumer preferences.
+
+Healthcare Applications:
+Analyzing patient reviews and feedback to assess the quality of healthcare services.
+
+Educational Feedback Analysis:
+Analyzing student feedback and evaluations to assess the effectiveness of educational programs.
+
+Political Sentiment Analysis:
+Analyzing public opinions on political issues and candidates during elections.
+
+Legal Document Analysis:
+Analyzing legal documents and court cases to extract key information and sentiments.
+
+
